@@ -1,116 +1,37 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-public class calculator {
-    public static void main(String[] args) {
-        //create JFrame
-        JFrame frame = new JFrame("Easy Calculator");
-        frame.setSize(500, 200);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //create panel
-        JPanel panel = new JPanel();
-        //add panel
-        frame.add(panel);
-        placeComponents(panel);
-        frame.setVisible(true);
-    }
-
-    public static void placeComponents(JPanel panel) {
-        //set 2row 4vol edge 5 pixel
-        panel.setLayout(new GridLayout(2, 5, 5, 5));
-
-        //input & output place
-        JTextField input1 = new JTextField(5);
-        JButton operation_ = new JButton();
-        operation_.setEnabled(false);
-        JTextField input2 = new JTextField(5);
-        JButton equal_ = new JButton("=");
-        equal_.setEnabled(false);
-        JButton output = new JButton();
-        output.setEnabled(false);
-        panel.add(input1);
-        panel.add(operation_);
-        panel.add(input2);
-        panel.add(equal_);
-        panel.add(output);
-
-        //button place
-        JButton b_add = new JButton("+");
-        JButton b_sub = new JButton("-");
-        JButton b_mul = new JButton("*");
-        JButton b_div = new JButton("/");
-        JButton b_equ = new JButton("OK");
-        panel.add(b_add);
-        panel.add(b_sub);
-        panel.add(b_mul);
-        panel.add(b_div);
-        panel.add(b_equ);
-
-        //button event
-        b_add.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String str = "+";
-                operation_.setText(str);
-            }
-        });
-        b_sub.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String str = "-";
-                operation_.setText(str);
-            }
-        });
-        b_mul.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String str = "*";
-                operation_.setText(str);
-            }
-        });
-        b_div.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String str = "/";
-                operation_.setText(str);
-            }
-        });
-
-        //calculate
-        b_equ.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String str1 = input1.getText();
-                String str2 = input2.getText();
-                String op = operation_.getText();
-                if(str1.length() <= 0 || str2.length() <= 0 || op.length() <= 0 || !isNumeric(str1) || !isNumeric(str2)) {
-                    output.setText("Error");
-                } else {
-                    double num1 = Integer.parseInt(str1);
-                    double num2 = Integer.parseInt(str2);
-                    if(op == "+") {
-                        String out = String.valueOf(num1 + num2);
-                        output.setText(out);
-                    }
-                    if(op == "-") {
-                        String out = String.valueOf(num1 - num2);
-                        output.setText(out);
-                    }
-                    if(op == "*") {
-                        String out = String.valueOf(num1 * num2);
-                        output.setText(out);
-                    }
-                    if(op == "/") {
-                        String out = String.valueOf(num1 / num2);
-                        output.setText(out);
-                    }
-                }
-            }
-        });
-    }
-
-    public static boolean isNumeric(String str) {
-        for (int i = str.length(); --i >= 0;) {
-            if(!Character.isDigit(str.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
+从 Junit 官方下载网站 https://github.com/KentBeck/junit/downloads 上下载 junit-4.9.zip.，
+把下载到的文件解压缩出来。（路径最好不要有中文字符）。
+为了验证环境是否配置正确，我们编写一个类，和一个测试类。
+----HelloWorld.java------
+import java.util.*;
+public class HelloWorld {
+String str;
+Public void hello()
+{
+ str = ―Hello World!‖;
 }
+Public String getStr()
+{
+ Return str;
+}
+}
+-----HelloWorldTest.java----------
+import static org.junit.Assert.*;
+import org.junit.Test;
+public class HelloWorldTest {
+public HelloWorld helloworld = new HelloWorld();
+@Test
+Public void testHello() {
+ helloworld.hello();
+ assertEquals(―Hello World!‖, helloworld.getStr());
+}
+}
+把这两个文件放在同一个目录下。
+使用如下命令运行：
+@sser>javac –classpath .:junit-4.9.jar HelloWorldTest.java
+@sser>java –classpath .:junit-4.9.jar –ea org.junit.runner.JUnitCore HelloWorldTest
+可得到如下输出结果：
+JUnit version 4.9
+.
+Time 0.007
+OK(1 test)
+我们可以看到运行正确，这也证明了我们的环境配置正确
