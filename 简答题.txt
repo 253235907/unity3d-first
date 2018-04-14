@@ -25,3 +25,53 @@ public class HelloWorldTest extends TestCase{
 		assertEquals("Hello_World", t2.str());
 	}
 }
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+-<project basedir="." default="run" name="HelloWorld">
+
+<property name="src" value="src"/>
+
+<property name="dest" value="classes"/>
+
+<property name="hello_jar" value="HelloWorld.jar"/>
+
+
+-<target name="junit">
+
+<available classname="junit.framework.TestCase" property="junit.present"/>
+
+</target>
+
+
+-<target name="init" depends="junit">
+
+<mkdir dir="${dest}"/>
+
+</target>
+
+
+-<target name="compile" depends="init">
+
+<javac destdir="${dest}" srcdir="${src}"/>
+
+</target>
+
+
+-<target name="run" depends="compile">
+
+<java classname="HelloWorld" classpath="${dest}"/>
+
+</target>
+
+
+-<target name="test" depends="compile">
+
+
++<junit printsummary="yes">
+
+</target>
+
+</project>
