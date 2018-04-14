@@ -1,37 +1,27 @@
-从 Junit 官方下载网站 https://github.com/KentBeck/junit/downloads 上下载 junit-4.9.zip.，
-把下载到的文件解压缩出来。（路径最好不要有中文字符）。
-为了验证环境是否配置正确，我们编写一个类，和一个测试类。
-----HelloWorld.java------
-import java.util.*;
 public class HelloWorld {
-String str;
-Public void hello()
-{
- str = ―Hello World!‖;
+	public static void main(String[] args) {
+		System.out.println("Hello World!");
+	}
+	public int add(int x, int y) {
+		int res = x + y;
+		return res;
+	}
+	public String str() {
+		return "Hello World";
+	}
+};
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+public class HelloWorldTest extends TestCase{
+	public void testgetInt() {
+		HelloWorld t1 = new HelloWorld();
+		assertEquals(5, t1.add(2, 3));
+	}
+	public void teststr() {
+		HelloWorld t2 = new HelloWorld();
+		assertEquals("Hello_World", t2.str());
+	}
 }
-Public String getStr()
-{
- Return str;
-}
-}
------HelloWorldTest.java----------
-import static org.junit.Assert.*;
-import org.junit.Test;
-public class HelloWorldTest {
-public HelloWorld helloworld = new HelloWorld();
-@Test
-Public void testHello() {
- helloworld.hello();
- assertEquals(―Hello World!‖, helloworld.getStr());
-}
-}
-把这两个文件放在同一个目录下。
-使用如下命令运行：
-@sser>javac –classpath .:junit-4.9.jar HelloWorldTest.java
-@sser>java –classpath .:junit-4.9.jar –ea org.junit.runner.JUnitCore HelloWorldTest
-可得到如下输出结果：
-JUnit version 4.9
-.
-Time 0.007
-OK(1 test)
-我们可以看到运行正确，这也证明了我们的环境配置正确
