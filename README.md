@@ -169,3 +169,79 @@ public class JumperTest {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="HelloWorld" default="run" basedir=".">
+<property name="src" value="src"/>
+<property name="dest" value="classes"/>
+<property name="hello_jar" value="HelloWorld.jar"/>
+
+<target name="junit">
+	<available property="junit.present" classname="junit.framework.TestCase"/>
+</target>
+
+<target name="init" depends="junit">
+   <mkdir dir="${dest}"/>
+</target>
+
+<target name="compile" depends="init">
+   <javac srcdir="${src}" destdir="${dest}"/>
+</target>
+
+<target name="run" depends="compile">
+   <java classname="HelloWorld" classpath="${dest}"/>
+</target>
+
+<target name="test" depends="compile">
+	<junit printsummary="yes">
+		<formatter type="plain"/>
+		<classpath path="${dest}"/>
+		<test name="HelloWorldTest"/>
+	</junit>
+</target>
+</project>
+
+public class HelloWorld {
+	public static void main(String[] args) {
+		System.out.println("Hello World!");
+	}
+	public int add(int x, int y) {
+		int res = x + y;
+		return res;
+	}
+	public String str() {
+		return "Hello World";
+	}
+};
+
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+public class HelloWorldTest extends TestCase{
+	public void testgetInt() {
+		HelloWorld t1 = new HelloWorld();
+		assertEquals(5, t1.add(2, 3));
+	}
+	public void teststr() {
+		HelloWorld t2 = new HelloWorld();
+		assertEquals("Hello_World", t2.str());
+	}
+}
+
+
+
