@@ -1,3 +1,116 @@
+package blusterCritter;
+
+
+import info.gridworld.actor.Actor;
+import info.gridworld.actor.Critter;
+import info.gridworld.grid.Location;
+
+import java.util.ArrayList;
+import java.awt.Color;
+
+public class BlusterCritter extends Critter
+{
+	private int courage;
+	private static final double DARKENING_FACTOR = 0.05;
+
+	public BlusterCritter() {
+		courage = 0;
+    setColor(Color.RED);
+	}
+
+	public BlusterCritter(int c) {
+		courage = c;
+    setColor(new Color(100,100,100));
+	}
+
+	public ArrayList<Actor> getActors()
+    {
+      ArrayList<Actor> actors = new ArrayList<Actor>();
+      int begin_r = getLocation().getRow() - 2;
+      int begin_c = getLocation().getCol() - 2;
+      int end_r = getLocation().getRow() + 2;
+      int end_c = getLocation().getCol() + 2;
+      for (int i = begin_r; i <= end_r; ++i) {
+      	for (int j = begin_c; j <= end_c; ++j) {
+      		if (i == getLocation().getRow() && j == getLocation().getCol())
+      			continue;
+      		Location loc = new Location(i, j);
+      		if (getGrid().isValid(loc)) {
+      			if  (getGrid().get(loc) != null && getGrid().get(loc) instanceof Critter)
+      				actors.add(getGrid().get(loc));
+      		}
+      	}
+      }
+      return actors;
+    }
+
+    public void processActors(ArrayList<Actor> actors) {
+    	Color c = getColor();
+    	if (actors.size() >= courage) {
+            int red = (int) (c.getRed() * (1 - DARKENING_FACTOR));
+            int green = (int) (c.getGreen() * (1 - DARKENING_FACTOR));
+            int blue = (int) (c.getBlue() * (1 - DARKENING_FACTOR));
+            setColor(new Color(red, green, blue));
+    	}
+    	else {
+    		int red = (int) (c.getRed() * (1 + DARKENING_FACTOR)) <= 255 ? (int) (c.getRed() * (1 + DARKENING_FACTOR)) : 255;
+            int green = (int) (c.getGreen() * (1 + DARKENING_FACTOR)) <= 255 ? (int) (c.getGreen() * (1 + DARKENING_FACTOR)) : 255;
+            int blue = (int) (c.getBlue() * (1 + DARKENING_FACTOR)) <= 255 ? (int) (c.getBlue() * (1 + DARKENING_FACTOR)) : 255;
+            setColor(new Color(red, green, blue));
+    	}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public class HelloWorld {
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
